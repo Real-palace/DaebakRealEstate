@@ -1,26 +1,54 @@
 ﻿@model DaebakRealEstate.Models.SecondPageModel
 @{
-    ViewData["Title"] = "Second Page";
+    ViewData["Title"] = "Admin Dashboard";
 }
 
-<!-- Navigation Bar -->
-<div class="container mt-3">
-    <nav class="d-flex justify-content-between align-items-center">
-        <img src="~/images/HOUSE1.png" alt="Logo" class="logo-img"> <!-- Use class for styling -->
-        <div>
-            <a href="#" class="mx-3 text-dark">HOME</a>
-            <a href="#" class="mx-3 text-dark">FORUMS</a>
-            <a href="#" class="mx-3 text-dark">HELP</a>
-        </div>
-        <a asp-controller="Account" asp-action="Logout" class="btn btn-dark rounded-pill px-4">Logout</a>
-    </nav>
-</div>
+<!-- Main Container -->
+<div class="d-flex vh-100">
 
-<!-- Announcements Section -->
-<div class="container mt-5">
-    <div class="card p-4 bg-light shadow-sm" style="max-width: 500px;">
-        <h5>Announcements</h5>
-        <p>Stay tuned for updates and news.</p>
+    <!-- Sidebar -->
+    <div class="sidebar bg-light border-end p-3 d-flex flex-column justify-content-between" style="width: 250px;">
+        <!-- Logo -->
+        <div class="text-center mb-4">
+            <img src="~/images/HOUSE3.png" alt="Logo" class="logo-img">
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="d-flex flex-column">
+            <a href="#" class="nav-item">HOME</a>
+            <a href="#" class="nav-item">MANAGEMENT</a>
+            <a href="#" class="nav-item">NOTIFICATIONS</a>
+            <a href="#" class="nav-item">SETTINGS</a>
+        </nav>
+
+        <!-- Logout Button -->
+        <a asp-controller="Account" asp-action="Logout" class="nav-item logout">LOGOUT</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow-1 p-4">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card p-4 bg-light text-center">USERS</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 bg-light text-center">COMMUNITY</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 bg-light text-center">SERVICES</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 bg-light text-center">BILL & PAYMENTS</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 bg-light text-center">SECURITY</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 bg-light text-center">DOCUMENT</div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -30,14 +58,47 @@
         background-color: white;
     }
 
-    .btn-dark {
-        background-color: #4a4a4a;
-        border: none;
+    .logo-img {
+        width: 80px;
+        height: auto;
     }
 
-    /* Fix image size */
-    .logo-img {
-        height: 80px;
-        width: auto;
+    /* Sidebar Navigation */
+    .sidebar {
+        transition: 0.3s ease-in-out;
     }
+
+    .nav-item {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+        .nav-item:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+    .logout {
+        margin-top: auto;
+    }
+
+    /* Card Styling */
+    .card {
+        cursor: pointer;
+        font-weight: bold;
+        border: none;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            background-color: #e0e0e0;
+        }
 </style>

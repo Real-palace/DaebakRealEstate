@@ -1,0 +1,31 @@
+﻿@model DaebakRealEstate.Models.UserViewModel
+@{
+    ViewData["Title"] = "Add User";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Add New User</h2>
+
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" asp-for="Name" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" asp-for="Email" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select class="form-control" asp-for="Role">
+                <option>Admin</option>
+                <option>User</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

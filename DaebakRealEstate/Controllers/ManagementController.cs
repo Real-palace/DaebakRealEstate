@@ -1,74 +1,83 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DaebakRealEstate.Models;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace DaebakRealEstate.Controllers
 {
     public class ManagementController : Controller
     {
-        private static List<UserViewModel> Users = new List<UserViewModel>
-        {
-            new UserViewModel { Id = 1, Name = "John Doe", Email = "john@example.com", Role = "Admin" },
-            new UserViewModel { Id = 2, Name = "Jane Smith", Email = "jane@example.com", Role = "User" }
-        };
+        private readonly ApplicationDbContext _context;
 
-        // Display Management Page with Search & Filter
-        public IActionResult Management(string search = "", string role = "")
+        public ManagementController(ApplicationDbContext context)
         {
-            var filteredUsers = Users.Where(u =>
-                (string.IsNullOrEmpty(search) || u.Name.Contains(search, System.StringComparison.OrdinalIgnoreCase) || u.Email.Contains(search, System.StringComparison.OrdinalIgnoreCase)) &&
-                (string.IsNullOrEmpty(role) || u.Role.Equals(role, System.StringComparison.OrdinalIgnoreCase))
-            ).ToList();
-
-            return View("Management", filteredUsers);
+            _context = context;
         }
 
-        // Display Add User Form
+        // ✅ Display Management Page with Search & Filter
+        public IActionResult Management(string search = "", string role = "")
+        {
+            var users = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                users = users.Where(u => u.Name.Contains(search) || u.Email.Contains(search));
+            }
+
+            if (!string.IsNullOrEmpty(role))
+            {
+                users = users.Where(u => u.Role == role);
+            }
+
+            return View("Management", users.ToList());
+        }
+
+        // ✅ Display Add User Form
         public IActionResult AddUser() => View();
 
-        // Process New User Form
+        // ✅ Process New User Form
         [HttpPost]
         public IActionResult AddUser(UserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                model.Id = Users.Any() ? Users.Max(u => u.Id) + 1 : 1;
-                Users.Add(model);
+                _context.Users.Add(model);
+                _context.SaveChanges();
                 return RedirectToAction("Management");
             }
             return View(model);
         }
 
-        // Display Edit User Form
+        // ✅ Display Edit User Form
         public IActionResult EditUser(int id)
         {
-            var user = Users.FirstOrDefault(u => u.Id == id);
+            var user = _context.Users.Find(id);
             return user == null ? NotFound() : View(user);
         }
 
-        // Process Edit User Form
+        // ✅ Process Edit User Form
         [HttpPost]
         public IActionResult EditUser(UserViewModel model)
         {
-            var user = Users.FirstOrDefault(u => u.Id == model.Id);
+            var user = _context.Users.Find(model.Id);
             if (user != null)
             {
                 user.Name = model.Name;
                 user.Email = model.Email;
                 user.Role = model.Role;
+                _context.SaveChanges();
                 return RedirectToAction("Management");
             }
             return NotFound();
         }
 
-        // Delete User
+        // ✅ Delete User
         public IActionResult DeleteUser(int id)
         {
-            var user = Users.FirstOrDefault(u => u.Id == id);
+            var user = _context.Users.Find(id);
             if (user != null)
             {
-                Users.Remove(user);
+                _context.Users.Remove(user);
+                _context.SaveChanges();
                 return RedirectToAction("Management");
             }
             return NotFound();

@@ -3,47 +3,206 @@
     ViewData["Title"] = "User Management";
 }
 
-<h2>User Management</h2>
+<!-- Custom Premium Styles -->
+<style>
+    /* Background & General Layout */
+    body {
+        background: linear-gradient(135deg, #f5f5dc 30%, #e6e6e6 100%);
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
 
-<!-- Search & Filter -->
-<form method="get" class="mb-3 d-flex">
-    <input type="text" name="search" class="form-control me-2" placeholder="Search Users..." />
-    <select name="role" class="form-control me-2">
-        <option value="All">All Roles</option>
-        <option value="User">User</option>
-        <option value="Admin">Admin</option>
-    </select>
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+    .container {
+        max-width: 1200px;
+    }
 
-<!-- Add New User Button -->
-<a asp-action="AddUser" class="btn btn-success mb-3">+ Add New User</a>
+    /* Premium Section Title */
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+    }
 
-<!-- User Table -->
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>@user.Id</td>
-                <td>@user.Name</td>
-                <td>@user.Email</td>
-                <td>@user.Role</td>
-                <td>
-                    <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-warning btn-sm">Edit</a>
-                    <a asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-danger btn-sm"
-                       onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
-                </td>
-            </tr>
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #c29f5d;
+            margin-top: 6px;
+            border-radius: 3px;
         }
-    </tbody>
-</table>
+
+    /* Premium Card UI */
+    .card-container {
+        background: rgba(255, 255, 255, 0.85);
+        padding: 20px;
+        border-radius: 14px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease-in-out;
+    }
+
+        .card-container:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+        }
+
+    /* Luxury Buttons */
+    .btn-main {
+        background: #c29f5d;
+        color: white;
+        font-weight: 600;
+        padding: 12px 18px;
+        border-radius: 8px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+        .btn-main:hover {
+            background: #b28a4a;
+        }
+
+    /* Search Box */
+    .search-box {
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 1rem;
+        transition: 0.3s;
+        background: rgba(255, 255, 255, 0.7);
+    }
+
+        .search-box:focus {
+            border-color: #c29f5d;
+            box-shadow: 0 0 8px rgba(194, 159, 93, 0.5);
+        }
+
+    /* Table Styling */
+    .table-container {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .table thead {
+        background: #2c3e50;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .table-hover tbody tr {
+        transition: all 0.3s;
+    }
+
+        .table-hover tbody tr:hover {
+            background: rgba(194, 159, 93, 0.1);
+        }
+
+    /* Role Badges */
+    .badge-role {
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .badge-admin {
+        background: #e74c3c;
+        color: white;
+        box-shadow: 0px 0px 10px rgba(231, 76, 60, 0.4);
+    }
+
+    .badge-user {
+        background: #3498db;
+        color: white;
+        box-shadow: 0px 0px 10px rgba(52, 152, 219, 0.4);
+    }
+
+    /* Action Buttons */
+    .action-btns a {
+        margin-right: 6px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .action-btns a:hover {
+            transform: scale(1.08);
+        }
+
+</style>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title">User Management</h2>
+        <a asp-action="AddUser" class="btn btn-main shadow-sm">
+            <i class="bi bi-person-plus-fill"></i> Add New User
+        </a>
+    </div>
+
+    <!-- Search & Filter Section -->
+    <div class="card-container">
+        <form method="get" class="row g-2">
+            <div class="col-md-5">
+                <input type="text" name="search" class="form-control search-box" placeholder="🔍 Search users...">
+            </div>
+            <div class="col-md-4">
+                <select name="role" class="form-select">
+                    <option value="All">All Roles</option>
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-main w-100">
+                    <i class="bi bi-search"></i> Search
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- User Table -->
+    <div class="table-responsive card-container mt-4">
+        <table class="table table-hover table-container">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <span class="badge-role @(user.Role == "Admin" ? "badge-admin" : "badge-user")">
+                                @user.Role
+                            </span>
+                        </td>
+                        <td class="text-center action-btns">
+                            <a asp-action="EditUser" asp-route-id="@user.Id" class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this user?')">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">

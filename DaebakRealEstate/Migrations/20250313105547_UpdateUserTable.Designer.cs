@@ -4,6 +4,7 @@ using DaebakRealEstate.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DaebakRealEstate.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250313105547_UpdateUserTable")]
+    partial class UpdateUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ANNOUNCEMENTS", (string)null);
+                    b.ToTable("Announcements");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.BillingItem", b =>
@@ -63,7 +66,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BILLING_ITEMS", (string)null);
+                    b.ToTable("BillingItems");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.Contact", b =>
@@ -91,7 +94,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CONTACTS", (string)null);
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.Document", b =>
@@ -118,7 +121,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DOCUMENTS", (string)null);
+                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.Event", b =>
@@ -142,7 +145,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EVENTS", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.Facility", b =>
@@ -167,7 +170,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FACILITIES", (string)null);
+                    b.ToTable("Facilities");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.FacilityReservation", b =>
@@ -193,7 +196,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FACILITY_RESERVATIONS", (string)null);
+                    b.ToTable("FacilityReservations");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.Feedback", b =>
@@ -220,7 +223,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FEEDBACK", (string)null);
+                    b.ToTable("Feedbacks");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.ForumCategory", b =>
@@ -241,7 +244,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FORUM_CATEGORIES", (string)null);
+                    b.ToTable("ForumCategories");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.ForumPost", b =>
@@ -270,7 +273,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasIndex("ForumThreadId");
 
-                    b.ToTable("FORUM_POSTS", (string)null);
+                    b.ToTable("ForumPosts");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.ForumReport", b =>
@@ -295,7 +298,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasIndex("ForumPostId");
 
-                    b.ToTable("FORUM_REPORTS", (string)null);
+                    b.ToTable("ForumReports");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.ForumThread", b =>
@@ -319,7 +322,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FORUM_THREADS", (string)null);
+                    b.ToTable("ForumThreads");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.Payment", b =>
@@ -345,7 +348,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PAYMENTS", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.Poll", b =>
@@ -365,7 +368,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("POLLS", (string)null);
+                    b.ToTable("Polls");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.PollResponse", b =>
@@ -387,7 +390,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasIndex("PollId");
 
-                    b.ToTable("POLL_RESPONSES", (string)null);
+                    b.ToTable("PollResponses");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.ServiceRequest", b =>
@@ -418,79 +421,67 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SERVICE_REQUESTS", (string)null);
+                    b.ToTable("ServiceRequests");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("USER_ID");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CREATED_AT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("EMAIL");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("FIRST_NAME");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("HouseNumber")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
-                        .HasColumnName("HOUSE_NUMBER");
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("LAST_NAME");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("PASSWORD_HASH");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("PHONE_NUMBER");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ProfilePicture")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("PROFILE_PICTURE");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)")
-                        .HasColumnName("ROLE");
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UPDATED_AT");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("USERNAME");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("UserId");
 
@@ -500,7 +491,7 @@ namespace DaebakRealEstate.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("USERS", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.UserBill", b =>
@@ -525,7 +516,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("USER_BILLS", (string)null);
+                    b.ToTable("UserBills");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.VehicleRegistration", b =>
@@ -553,7 +544,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VEHICLE_REGISTRATIONS", (string)null);
+                    b.ToTable("VehicleRegistrations");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.VisitorPass", b =>
@@ -580,7 +571,7 @@ namespace DaebakRealEstate.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VISITOR_PASSES", (string)null);
+                    b.ToTable("VisitorPasses");
                 });
 
             modelBuilder.Entity("DaebakRealEstate.Models.ForumPost", b =>

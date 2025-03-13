@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DaebakRealEstate.Models;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace DaebakRealEstate.Controllers
 {
@@ -13,74 +15,68 @@ namespace DaebakRealEstate.Controllers
             _context = context;
         }
 
-        // ✅ Display Management Page with Search & Filter
-        public IActionResult Management(string search = "", string role = "")
+        // Management action to serve Management.cshtml
+        public IActionResult Management()
         {
-            var users = _context.Users.AsQueryable();
-
-            if (!string.IsNullOrEmpty(search))
-            {
-                users = users.Where(u => u.Name.Contains(search) || u.Email.Contains(search));
-            }
-
-            if (!string.IsNullOrEmpty(role))
-            {
-                users = users.Where(u => u.Role == role);
-            }
-
-            return View("Management", users.ToList());
+            return View(); // Ensure /Views/Management/Management.cshtml exists
         }
 
-        // ✅ Display Add User Form
-        public IActionResult AddUser() => View();
-
-        // ✅ Process New User Form
-        [HttpPost]
-        public IActionResult AddUser(UserViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Users.Add(model);
-                _context.SaveChanges();
-                return RedirectToAction("Management");
-            }
-            return View(model);
-        }
-
-        // ✅ Display Edit User Form
         public IActionResult EditUser(int id)
         {
             var user = _context.Users.Find(id);
-            return user == null ? NotFound() : View(user);
+            if (user == null) return NotFound();
+
+            var model = new UserViewModel
+            {
+                Id = user.UserId,
+                Username = user.Username ?? "N/A",
+                Email = user.Email ?? "N/A",
+                FirstName = user.FirstName ?? "N/A",
+                LastName = user.LastName ?? "N/A",
+                PhoneNumber = user.PhoneNumber,
+                HouseNumber = user.HouseNumber,
+                Role = user.Role ?? "N/A"
+            };
+
+            return View(model);
         }
 
-        // ✅ Process Edit User Form
         [HttpPost]
         public IActionResult EditUser(UserViewModel model)
         {
-            var user = _context.Users.Find(model.Id);
-            if (user != null)
+            if (ModelState.IsValid)
             {
-                user.Name = model.Name;
+                var user = _context.Users.Find(model.Id);
+                if (user == null) return NotFound();
+
+                user.Username = model.Username;
                 user.Email = model.Email;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PhoneNumber = model.PhoneNumber;
+                user.HouseNumber = model.HouseNumber;
                 user.Role = model.Role;
+
+                if (!string.IsNullOrEmpty(model.Password))
+                {
+                    user.PasswordHash = HashPassword(model.Password);
+                }
+
+                _context.Users.Update(user);
                 _context.SaveChanges();
                 return RedirectToAction("Management");
             }
-            return NotFound();
+
+            return View(model);
         }
 
-        // ✅ Delete User
-        public IActionResult DeleteUser(int id)
+        private string HashPassword(string password)
         {
-            var user = _context.Users.Find(id);
-            if (user != null)
+            using (SHA256 sha256 = SHA256.Create())
             {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
-                return RedirectToAction("Management");
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(bytes).Replace("-", "").ToLower();
             }
-            return NotFound();
         }
     }
 }

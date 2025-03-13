@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DaebakRealEstate.Pages
+namespace DaebakRealEstate.Views.Account
 {
     public class SecondPageModel : PageModel
     {

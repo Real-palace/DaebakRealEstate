@@ -7,10 +7,10 @@
 <div class="d-flex vh-100">
 
     <!-- Sidebar -->
-    <div class="sidebar bg-light border-end p-3 d-flex flex-column justify-content-between" style="width: 250px;">
+    <div class="sidebar d-flex flex-column justify-content-between">
         <!-- Logo -->
         <div class="text-center mb-4">
-            <img src="~/images/LOGO.png" alt="Logo" class="logo-img">
+            <img src="~/images/daebak_logo.png" alt="Logo" class="logo-img">
         </div>
 
         <!-- Navigation Links -->
@@ -24,65 +24,91 @@
         <!-- Logout Button -->
         <a asp-controller="Account" asp-action="Logout" class="nav-item logout">LOGOUT</a>
     </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- You can still put content here if needed -->
     </div>
 
-<!-- Custom Styles -->
+</div>
+
+<!-- Styles -->
 <style>
-    body {
-        background-color: white;
+    /* General Layout */
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        overflow: hidden; /* Prevent scrolling */
+        background: url('/images/HOME5.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    /* Sidebar with Glassmorphism Effect */
+    .sidebar {
+        width: 250px; /* Adjust as needed */
+        height: 100vh;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5)); /* Transparent to white */
+        backdrop-filter: blur(10px); /* Glass effect */
+        -webkit-backdrop-filter: blur(10px); /* For Safari */
+        border-right: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+        padding: 20px 15px;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        left: 0;
+        top: 0;
     }
 
     .logo-img {
-        width: 80px;
-        height: auto;
+        width: 120px;
     }
 
-    /* Sidebar Navigation */
-    .sidebar {
-        transition: 0.3s ease-in-out;
-    }
-
+    /* Navigation Links */
     .nav-item {
-        display: block;
         text-decoration: none;
-        color: #333;
-        background-color: #f8f9fa;
-        padding: 10px;
-        border-radius: 5px;
+        color: white;
+        padding: 12px;
+        border-radius: 8px;
         text-align: center;
         font-weight: bold;
         margin-bottom: 10px;
-        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        transition: background 0.3s ease-in-out, transform 0.2s ease;
+        display: block;
+        background: rgba(255, 255, 255, 0.2); /* Semi-transparent */
     }
 
-        .nav-item:hover {
-            background-color: #007bff;
-            color: white;
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.4); /* Lighter effect */
+            transform: scale(1.05);
+            color: #2c3e50;
         }
 
     .logout {
-        margin-top: auto;
-    }
-
-    /* Card Styling */
-    .card {
-        cursor: pointer;
+        background: rgba(255, 50, 50, 0.4); /* Soft red */
+        padding: 12px;
+        text-align: center;
+        color: white;
         font-weight: bold;
-        border: none;
-        transition: all 0.3s ease-in-out;
+        border-radius: 8px;
+        margin-top: auto;
+        transition: background 0.3s ease-in-out, transform 0.2s ease;
     }
 
-        .card:hover {
-            background-color: #007bff;
+        .logout:hover {
+            background: rgba(255, 50, 50, 0.6);
+            transform: scale(1.05);
         }
 
-    /* Hover effect for Users, Community, and Services */
-    .card-hover {
-        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    /* Main Content */
+    .main-content {
+        margin-left: 250px; /* Push content right so sidebar doesn't overlap */
+        flex-grow: 1;
+        text-align: center;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
     }
 
-        .card-hover:hover {
-            background-color: #007bff;
-            color: white;
-        }
 </style>

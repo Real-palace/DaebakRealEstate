@@ -2,23 +2,96 @@
     ViewData["Title"] = "Management";
 }
 
-<div class="container mt-4">
-    <h2 class="mb-4">Management</h2>
-    <div class="row">
+<div class="container mt-5">
+    <h2 class="management-title">MANAGEMENT</h2>
+
+    <div class="row mt-4">
         <div class="col-md-4">
-            <a asp-controller="UserManagement" asp-action="Index" class="btn btn-light d-block p-4 text-center">
-                <strong>USERS</strong>
+            <a asp-controller="UserManagement" asp-action="Index" class="card management-card">
+                <div class="card-body">
+                    <h4>USERS</h4>
+                </div>
             </a>
         </div>
         <div class="col-md-4">
-            <a asp-controller="Community" asp-action="Index" class="btn btn-light d-block p-4 text-center">
-                <strong>COMMUNITY</strong>
+            <a asp-controller="Community" asp-action="Index" class="card management-card">
+                <div class="card-body">
+                    <h4>COMMUNITY</h4>
+                </div>
             </a>
         </div>
         <div class="col-md-4">
-            <a asp-controller="Services" asp-action="Index" class="btn btn-light d-block p-4 text-center">
-                <strong>SERVICES</strong>
+            <a asp-controller="Services" asp-action="Index" class="card management-card">
+                <div class="card-body">
+                    <h4>SERVICES</h4>
+                </div>
             </a>
         </div>
     </div>
 </div>
+
+<style>
+    /* General Styles */
+    body, html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        overflow: hidden; /* Prevent scrolling */
+        background: url('/images/HOME7.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    /* Container */
+    .container {
+        max-width: 500px;
+        margin: auto;
+        text-align: center;
+    }
+
+    .management-title {
+        color: #ffffff; /* White title for better visibility */
+        font-weight: bold;
+        margin-bottom: 30px;
+        font-size: 24px;
+    }
+
+    /* Transparent Glass Effect with Gradient */
+    .management-card {
+        width: 100%;
+        height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4)); /* Smooth gradient */
+        backdrop-filter: blur(10px); /* Glass effect */
+        border-radius: 12px;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    }
+
+        /* Hover effect */
+        .management-card:hover {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.6)); /* Brighter hover */
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Ensure all columns are equal width */
+    .col-md-4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Responsive spacing */
+    .col-md-4 {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+</style>
